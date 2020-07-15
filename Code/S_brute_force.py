@@ -10,6 +10,9 @@ from subprocess import call
 import sys
 import csv
 import sympy as sp
+
+from pathlib import Path
+
 from sympy.parsing.sympy_parser import parse_expr
 
 # sep_type = 3 for add and 2 for mult and 1 for normal
@@ -22,10 +25,18 @@ def brute_force(pathdir,filename,BF_try_time,BF_ops_file_type,sep_type="*"):
     except:
         pass
     if sep_type=="*":
-        subprocess.call(["./brute_force_oneFile_v2.scr", file_type, "%s" %try_time, pathdir+filename])
+        # 'check=False' because it will return exit status 124 when it time out
+        subprocess.run([Path("./brute_force_oneFile_v2.scr").resolve(),
+                        file_type, "%s" %try_time,
+                        Path(pathdir+filename).resolve()],
+                       shell=False, check=False)
         #subprocess.call(["./brute_force_oneFile_mdl_v3.scr", file_type, "%s" %try_time, pathdir+filename, "10", "0"])
     if sep_type=="+":
-        subprocess.call(["./brute_force_oneFile_v3.scr", file_type, "%s" %try_time, pathdir+filename])
+        # 'check=False' because it will return exit status 124 when it time out
+        subprocess.run([Path("./brute_force_oneFile_v3.scr").resolve(),
+                        file_type, "%s" %try_time,
+                        Path(pathdir+filename).resolve()],
+                       shell=False, check=False) 
         #subprocess.call(["./brute_force_oneFile_mdl_v2.scr", file_type, "%s" %try_time, pathdir+filename, "10", "0"])
     return 1
 
